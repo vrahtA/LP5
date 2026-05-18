@@ -144,17 +144,32 @@ np.random.seed(42)
 tf.random.set_seed(42)
 sns.set_style('whitegrid')
 
-
+# -
 (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
 
 print('Training Data Shape:', x_train.shape)
 print('Testing Data Shape :', x_test.shape)
 
-
+# -
 x_train = x_train.astype('float32') / 255.0
 x_test = x_test.astype('float32') / 255.0
 
 
+# -
+class_names = [
+    'T-shirt',
+    'Trouser',
+    'Pullover',
+    'Dress',
+    'Coat',
+    'Sandal',
+    'Shirt',
+    'Sneaker',
+    'Bag',
+    'Ankle boot'
+]
+
+# -
 plt.figure(figsize=(10, 10))
 
 for i in range(9):
@@ -165,7 +180,7 @@ for i in range(9):
 
 plt.show()
 
-
+# -
 model = Sequential([
     Input(shape=(28, 28)),
     Flatten(),
@@ -184,7 +199,7 @@ model.compile(
 
 model.summary()
 
-
+# -
 early_stop = EarlyStopping(
     monitor='val_loss',
     patience=3,
@@ -201,7 +216,7 @@ history = model.fit(
     verbose=0
 )
 
-
+# -
 test_loss, test_accuracy = model.evaluate(x_test, y_test, verbose=0)
 predictions = model.predict(x_test, verbose=0)
 y_pred = np.argmax(predictions, axis=1)
@@ -221,7 +236,7 @@ plt.xticks(rotation=45, ha='right')
 plt.yticks(rotation=0)
 plt.show()
 
-
+# -
 plt.figure(figsize=(12, 5))
 
 plt.subplot(1, 2, 1)
